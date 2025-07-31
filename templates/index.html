@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSE Indices Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <h1>NSE Indices Dashboard</h1>
+                </div>
+                <div class="header-controls">
+                    <button id="refreshBtn" class="btn btn-primary">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <div class="last-updated">
+                        Last updated: <span id="lastUpdated">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Market Status Banner -->
+        <div class="market-status" id="marketStatus">
+            <div class="status-indicator">
+                <i class="fas fa-circle"></i>
+                <span id="statusText">Market Status: Loading...</span>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loadingSpinner">
+            <div class="spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+            <p>Loading NSE Indices Data...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" id="errorMessage" style="display: none;">
+            <div class="error-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Error Loading Data</h3>
+                <p id="errorText"></p>
+                <button id="retryBtn" class="btn btn-secondary">
+                    <i class="fas fa-redo"></i> Retry
+                </button>
+            </div>
+        </div>
+
+        <!-- Indices Grid -->
+        <main class="main-content">
+            <div class="indices-grid" id="indicesGrid">
+                <!-- Index cards will be dynamically populated here -->
+            </div>
+        </main>
+
+        <!-- Additional Data Sections -->
+        <section class="additional-data">
+            <div class="data-tabs">
+                <button class="tab-btn active" data-tab="trending">
+                    <i class="fas fa-fire"></i> Trending Stocks
+                </button>
+                <button class="tab-btn" data-tab="active">
+                    <i class="fas fa-chart-bar"></i> Most Active
+                </button>
+            </div>
+
+            <div class="tab-content">
+                <div id="trendingTab" class="tab-pane active">
+                    <div class="stocks-list" id="trendingStocks">
+                        <!-- Trending stocks will be populated here -->
+                    </div>
+                </div>
+                <div id="activeTab" class="tab-pane">
+                    <div class="stocks-list" id="activeStocks">
+                        <!-- Most active stocks will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 NSE Indices Dashboard. Data provided for educational purposes.</p>
+                <div class="footer-links">
+                    <a href="#" onclick="showApiDocs()">API Documentation</a>
+                    <a href="#" onclick="showAbout()">About</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal for API Documentation -->
+    <div class="modal" id="apiModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>API Documentation</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>Available Endpoints:</h3>
+                <div class="api-endpoint">
+                    <code>GET /api/indices</code>
+                    <p>Get all NSE indices data</p>
+                </div>
+                <div class="api-endpoint">
+                    <code>GET /api/index/{index_name}</code>
+                    <p>Get specific index data (e.g., NIFTY%2050, NIFTY%20BANK)</p>
+                </div>
+                <div class="api-endpoint">
+                    <code>GET /api/trending</code>
+                    <p>Get trending stocks data</p>
+                </div>
+                <div class="api-endpoint">
+                    <code>GET /api/most-active</code>
+                    <p>Get most active stocks data</p>
+                </div>
+                <div class="api-endpoint">
+                    <code>GET /api/status</code>
+                    <p>Get API status and health check</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
