@@ -130,9 +130,13 @@ class NSEDataFetcher:
     def fetch_from_nsescraper(self, index_name):
         """Fetch data using nsescraper library"""
         try:
+            # Try to import and use nsescraper
             from nsescraper import intraday_index
             data = intraday_index(index_name)
             return data
+        except ImportError:
+            logger.warning("nsescraper not available, skipping this data source")
+            return None
         except Exception as e:
             logger.error(f"Error fetching from nsescraper: {e}")
             return None
